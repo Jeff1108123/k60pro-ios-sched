@@ -1,0 +1,6 @@
+{
+    "changelog":  "首版在线更新通道：三档QoS状态机(触摸/亮屏/息屏)，SCHED_IDLE后台饥饿，uclamp.max封顶，亮灭屏自动检测",
+    "versionCode":  11100,
+    "version":  "v1.1.1",
+    "zipUrl":  "https://github.com/Jeff1108123/k60pro-ios-sched/releases/download/v1.1.1/ios_sched_k60pro-v1.1.1.zip"
+}
