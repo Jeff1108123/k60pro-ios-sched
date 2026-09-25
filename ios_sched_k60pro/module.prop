@@ -1,0 +1,7 @@
+id=ios_sched_k60pro
+name=K60 Pro iOS风格调度增强
+version=v1.1.1
+versionCode=11100
+author=HP
+description=[红米K60Pro/socrates] 类iOS三档QoS状态机：触摸档uclamp=60/亮屏档25/息屏恢复原值；后台饥饿策略：SCHED_IDLE(cpu.idle=1)+uclamp.max封顶+锁小核+降权。亮灭屏自动检测，息屏零开销待命。所有改动原值存档，卸载自动还原。配置: /data/adb/ios_sched/config
+updateJson=https://raw.githubusercontent.com/Jeff1108123/k60pro-ios-sched/main/update.json

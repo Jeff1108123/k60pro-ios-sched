@@ -1,0 +1,57 @@
+# =============================================================
+# iOS风格调度 配置文件 (/data/adb/ios_sched/config)
+# 修改后重启手机生效; 所有原值自动存档, 卸载模块自动还原
+# =============================================================
+
+# ---------- 三档 QoS (对应 iOS 交互分级) ----------
+
+# 触摸档: 正在触摸 -> top-app uclamp.min 百分比 (0=不动)
+# 滑动跟手、动画满帧的核心参数
+TOUCH_UCLAMP=60
+
+# 亮屏档: 亮屏但没在摸 -> top-app uclamp.min 百分比 (0=不动)
+# 对应 iOS "屏幕亮着前台就是 Interactive", 看视频/阅读不掉QoS
+SCREEN_UCLAMP=25
+
+# 触摸静止后多少秒降为亮屏档
+IDLE_TIMEOUT=15
+
+# 亮屏档下检查息屏的轮询间隔(秒)
+SCREEN_POLL=10
+
+# 触摸时 sched_boost 档位: 0=关 1=保守 2=激进 (本机内核无此节点, 自动跳过)
+TOUCH_SCHED_BOOST=2
+
+# 触摸时的调度延迟参数(纳秒, 0=不动; 本机 GKI 内核无这些节点, 自动跳过)
+TOUCH_MIN_GRAN=1000000
+TOUCH_WAKEUP_GRAN=500000
+TOUCH_SCHED_LATENCY=8000000
+
+# ---------- 后台 QoS (对应 iOS 后台饥饿) ----------
+
+# 后台策略总开关: 1=开启
+RESTRICT_BG=1
+
+# SCHED_IDLE: 1=后台组只有 CPU 空闲时才能运行 (最接近 iOS 后台饥饿, 强烈建议开)
+BG_IDLE=1
+
+# 后台组 uclamp.max 百分比封顶 (0=不动; 后台任务最高只能用该比例的CPU能力)
+BG_UCLAMP_MAX=50
+
+# 要压制的组(空格分隔)。默认只锁 background(纯后台应用)。
+# 不要加 system-background: 含音频等低延迟系统服务, HyperOS 有意给 0-6;
+# 不要加 restricted: HyperOS 游戏加速会把游戏挪进该组, 锁小核会掉帧。
+BG_GROUPS="background"
+
+# 后台 cpu 权重上限(只降不升): cgroup v1 cpu.shares / v2 cpu.weight
+BG_WEIGHT_V1=400
+BG_WEIGHT_V2=50
+
+# ---------- 其他 (留空 = 自动检测) ----------
+
+# BG_CPUS="0-2"    # 小核范围(自动=按cpu_capacity探测)
+BG_CPUS=""
+# TA_CPUS="0-7"    # 前台/交互组可用核心(自动=全部在线核心)
+TA_CPUS=""
+# TS_DEVICE=""     # 触控输入设备(自动=goodix_ts)
+TS_DEVICE=""
