@@ -20,8 +20,8 @@ if ($VersionCode -eq 0) {
     $VersionCode = [int]((Select-String -Path "$modDir\module.prop" -Pattern '^versionCode=(\d+)').Matches[0].Groups[1].Value)
 }
 
-# 1) 版本号写入 module.prop
-$prop = Get-Content "$modDir\module.prop" -Raw
+# 1) 版本号写入 module.prop (用 .NET 读取避免 PS5.1 GBK 编码问题)
+$prop = [IO.File]::ReadAllText("$modDir\module.prop")
 $prop = $prop -replace '(?m)^version=.*$', "version=$Version"
 $prop = $prop -replace '(?m)^versionCode=.*$', "versionCode=$VersionCode"
 [IO.File]::WriteAllText("$modDir\module.prop", $prop, (New-Object System.Text.UTF8Encoding($false)))
